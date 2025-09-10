@@ -1,6 +1,6 @@
 // Active yappers list
 const activeYappers = [
-  "CRMRH13", "mustemgul", "godmimi3", "moonyu_myu", "ObasiDavid14", "gridonbtc",
+  "CRMRH13", "justprisci001" , "mustemgul", "godmimi3", "moonyu_myu", "ObasiDavid14", "gridonbtc",
   "Edward__Park", "Whitecube72", "RaoniKor", "jj85_3920", "ramztd", "philippphaa",
   "9RoHem", "wlgns5388", "Elantra120", "vicissol", "jimhalpert_2na", "Bum_cryptotiger",
   "Jaxon0x", "evandromoisinho", "ank129048", "MZaiyyad", "MinhTri2st", "CircleVang",
