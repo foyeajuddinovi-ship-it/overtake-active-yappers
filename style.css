@@ -125,3 +125,33 @@ footer {
   color: #eee;
   background: #003d80;
 }
+function startCountdown() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth(); // চলতি মাস
+  const targetDate = new Date(year, month, 25, 23, 59, 59); // মাসের ২৫ তারিখ রাত ১১:৫৯:৫৯
+
+  function updateCountdown() {
+    const current = new Date().getTime();
+    const distance = targetDate.getTime() - current;
+
+    if (distance <= 0) {
+      document.getElementById("countdown").textContent = "✅ Countdown Finished!";
+      clearInterval(timer);
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown").textContent =
+      `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  updateCountdown(); // প্রথমবার রান করাবে
+  const timer = setInterval(updateCountdown, 1000);
+}
+
+startCountdown();
