@@ -61,13 +61,55 @@ button:hover {
   margin-top: 15px;
 }
 
-.made-by {
+/* কাউন্টার */
+#counter {
   margin-top: 15px;
   font-size: 14px;
-  color: #333;
+  color: #444;
   font-weight: bold;
 }
 
+/* নাম */
+h4 {
+  margin-top: 20px;
+}
+
+/* অ্যানিমেশন */
+.success {
+  animation: pop 0.6s ease;
+}
+
+.fail {
+  animation: shake 0.4s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* শেয়ার বাটন */
+.share-btn {
+  margin-top: 15px;
+  padding: 8px 14px;
+  background: #1da1f2;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+}
+.share-btn:hover {
+  background: #0d8ddb;
+}
+
+/* ফুটার */
 footer {
   margin-top: 60px;
   padding: 15px;
