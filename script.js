@@ -47,8 +47,8 @@ function checkUsername() {
 
 function shareResult(isActive) {
   const text = isActive 
-    ? "🎉 I am an Active Yapper! ✅ Check yours here 👉 https://foyeajuddinovi-ship-it.github.io/overtake-active-yappers/" 
-    : "❌ I am not an Active Yapper... Check yours here 👉 https://foyeajuddinovi-ship-it.github.io/overtake-active-yappers/";
+    ? "🎉 I am an Active Yapper of @overtake_world! ✅ Check yours here 👉 https://x.com/Foyeajuddinovi/status/1965874624505458749" 
+    : "❌ I am not an Active Yapper of @overtake_world ... Check yours here 👉https://x.com/Foyeajuddinovi/status/1965874624505458749";
   
   const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
   window.open(url, '_blank');
