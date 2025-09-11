@@ -1,6 +1,7 @@
 let totalChecks = 0;
+let currentPrice = 0;
 
-// Active yappers list (নতুন নামগুলোসহ)
+// Active yappers list
 const activeYappers = [
   "CRMRH13","mustemgul","godmimi3","moonyu_myu","ObasiDavid14","gridonbtc",
   "Edward__Park","Whitecube72","RaoniKor","jj85_3920","ramztd","philippphaa",
@@ -12,7 +13,6 @@ const activeYappers = [
   "Ademola37791000","BOBZERAH2","cobacknam","Foyeajuddinovi","0x0Nova",
   "Justuyi_","Elyuna05","QTee99","gimchan66711888","RMac_5","liebe19_",
   "NFTea_Labs","juraucrypt","Cockoru","Rhythm_rere2","kss4319","manlikejayB",
-  // নতুন এড করা ইউজারনেম
   "TgStyles2","karrbon_xero","chibuenyim71492","HORLRWEALTH"
 ];
 
@@ -50,7 +50,34 @@ function shareResult(isActive) {
     ? "🎉 I am an Active Yapper of @overtake_world! ✅ Check yours here 👉 https://x.com/Foyeajuddinovi/status/1965874624505458749" 
     : "❌ I am not an Active Yapper of @overtake_world ... Check yours here 👉 https://x.com/Foyeajuddinovi/status/1965874624505458749";
   
-  // Intent সবসময় twitter.com দিয়েই করতে হবে
   const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
   window.open(url, '_blank');
 }
+
+// Calculator
+function calculateValue() {
+  const amount = document.getElementById("takeAmount").value;
+  if (amount && currentPrice > 0) {
+    const total = (amount * currentPrice).toFixed(2);
+    document.getElementById("calcResult").textContent = `${amount} $TAKE = $${total}`;
+  } else {
+    document.getElementById("calcResult").textContent = "Please enter amount or wait for price.";
+  }
+}
+
+// Live Price from CoinGecko
+async function fetchPrice() {
+  try {
+    const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=overtake&vs_currencies=usd");
+    const data = await res.json();
+    currentPrice = data.overtake.usd;
+    document.getElementById("livePrice").textContent = `🔴 Live $TAKE Price: $${currentPrice}`;
+  } catch (err) {
+    document.getElementById("livePrice").textContent = "⚠️ Error fetching price.";
+  }
+}
+
+// প্রথম লোডে দাম আনবে
+fetchPrice();
+// প্রতি ১ মিনিট পর পর আপডেট হবে
+setInterval(fetchPrice, 60000);
