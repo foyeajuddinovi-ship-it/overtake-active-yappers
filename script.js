@@ -1,7 +1,7 @@
 let totalChecks = 0;
 let currentPrice = 0;
 
-// Active yappers list
+// =================== Active Yappers ===================
 const activeYappers = [
   "CRMRH13","mustemgul","godmimi3","moonyu_myu","ObasiDavid14","gridonbtc",
   "Edward__Park","Whitecube72","RaoniKor","jj85_3920","ramztd","philippphaa",
@@ -54,7 +54,7 @@ function shareResult(isActive) {
   window.open(url, '_blank');
 }
 
-// Calculator
+// =================== Calculator ===================
 function calculateValue() {
   const amount = document.getElementById("takeAmount").value;
   if (amount && currentPrice > 0) {
@@ -65,28 +65,34 @@ function calculateValue() {
   }
 }
 
-// Live Price from CoinGecko
-async function fetchPrice() {
+// =================== CoinGecko Live Data ===================
+async function loadTakeData() {
   try {
-    const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=overtake&vs_currencies=usd");
+    const res = await fetch("https://api.coingecko.com/api/v3/coins/overtake");
     const data = await res.json();
-    currentPrice = data.overtake.usd;
-    document.getElementById("livePrice").textContent = `🔴 Live $TAKE Price: $${currentPrice}`;
+
+    currentPrice = data.market_data.current_price.usd;
+
+    document.getElementById("livePrice").textContent = "🔴 Live $TAKE Price: $" + currentPrice.toLocaleString();
+    document.getElementById("take-price").textContent = "$" + currentPrice.toLocaleString();
+    document.getElementById("take-volume").textContent = "$" + data.market_data.total_volume.usd.toLocaleString();
+    document.getElementById("take-fdv").textContent = "$" + data.market_data.fully_diluted_valuation.usd.toLocaleString();
+    document.getElementById("take-mcap").textContent = "$" + data.market_data.market_cap.usd.toLocaleString();
   } catch (err) {
+    console.error("Error loading TAKE data", err);
     document.getElementById("livePrice").textContent = "⚠️ Error fetching price.";
   }
 }
 
-// প্রথম লোডে দাম আনবে
-fetchPrice();
-// প্রতি ১ মিনিট পর পর আপডেট হবে
-setInterval(fetchPrice, 60000);
+loadTakeData();
+setInterval(loadTakeData, 60000); // প্রতি ১ মিনিটে আপডেট হবে
 
+// =================== Countdown ===================
 function startCountdown() {
   const now = new Date();
   const year = now.getFullYear();
-  const month = now.getMonth(); // চলতি মাস
-  const targetDate = new Date(year, month, 25, 11, 59, 59); // মাসের ২৫ তারিখ GM ১১:৫৯:৫৯
+  const month = now.getMonth(); 
+  const targetDate = new Date(year, month, 25, 12, 0, 0); // ২৫ তারিখ দুপুর ১২:০০ (লোকাল টাইম)
 
   function updateCountdown() {
     const current = new Date().getTime();
@@ -107,31 +113,8 @@ function startCountdown() {
       `${days}d ${hours}h ${minutes}m ${seconds}s`;
   }
 
-  updateCountdown(); // প্রথমবার রান করাবে
+  updateCountdown();
   const timer = setInterval(updateCountdown, 1000);
 }
 
 startCountdown();
-
-
-let currentPrice = 0;
-
-async function loadTakeData() {
-  try {
-    const res = await fetch("https://api.coingecko.com/api/v3/coins/overtake");
-    const data = await res.json();
-
-    currentPrice = data.market_data.current_price.usd;
-
-    document.getElementById("livePrice").textContent = "$" + currentPrice.toLocaleString();
-    document.getElementById("take-price").textContent = "$" + currentPrice.toLocaleString();
-    document.getElementById("take-volume").textContent = "$" + data.market_data.total_volume.usd.toLocaleString();
-    document.getElementById("take-fdv").textContent = "$" + data.market_data.fully_diluted_valuation.usd.toLocaleString();
-    document.getElementById("take-mcap").textContent = "$" + data.market_data.market_cap.usd.toLocaleString();
-  } catch (err) {
-    console.error("Error loading TAKE data", err);
-  }
-}
-
-loadTakeData();
-setInterval(loadTakeData, 60000); // প্রতি ১ মিনিটে আপডেট হবে
