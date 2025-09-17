@@ -1,7 +1,7 @@
 let totalChecks = 0;
 let currentPrice = 0;
 
-// =================== Active Yappers ===================
+// Active yappers list
 const activeYappers = [
   "CRMRH13","mustemgul","godmimi3","moonyu_myu","ObasiDavid14","gridonbtc",
   "Edward__Park","Whitecube72","RaoniKor","jj85_3920","ramztd","philippphaa",
@@ -34,13 +34,13 @@ function checkUsername() {
     resultDiv.innerHTML = `
       <img src="congrats.png" alt="Congrats!" class="success">
       <br>
-      <button class="share-btn" onclick="shareResult(true)">Share on Twitter</button>
+      <button onclick="shareResult(true)">Share on Twitter</button>
     `;
   } else {
     resultDiv.innerHTML = `
       <img src="notfound.png" alt="Not Found" class="fail">
       <br>
-      <button class="share-btn" onclick="shareResult(false)">Share on Twitter</button>
+      <button onclick="shareResult(false)">Share on Twitter</button>
     `;
   }
 }
@@ -54,7 +54,7 @@ function shareResult(isActive) {
   window.open(url, '_blank');
 }
 
-// =================== Calculator ===================
+// Calculator
 function calculateValue() {
   const amount = document.getElementById("takeAmount").value;
   if (amount && currentPrice > 0) {
@@ -65,7 +65,7 @@ function calculateValue() {
   }
 }
 
-// =================== CoinGecko Live Data ===================
+// Market Info from CoinGecko
 async function loadTakeData() {
   try {
     const res = await fetch("https://api.coingecko.com/api/v3/coins/overtake");
@@ -73,26 +73,24 @@ async function loadTakeData() {
 
     currentPrice = data.market_data.current_price.usd;
 
-    document.getElementById("livePrice").textContent = "🔴 Live $TAKE Price: $" + currentPrice.toLocaleString();
     document.getElementById("take-price").textContent = "$" + currentPrice.toLocaleString();
     document.getElementById("take-volume").textContent = "$" + data.market_data.total_volume.usd.toLocaleString();
     document.getElementById("take-fdv").textContent = "$" + data.market_data.fully_diluted_valuation.usd.toLocaleString();
     document.getElementById("take-mcap").textContent = "$" + data.market_data.market_cap.usd.toLocaleString();
   } catch (err) {
     console.error("Error loading TAKE data", err);
-    document.getElementById("livePrice").textContent = "⚠️ Error fetching price.";
   }
 }
 
 loadTakeData();
 setInterval(loadTakeData, 60000); // প্রতি ১ মিনিটে আপডেট হবে
 
-// =================== Countdown ===================
+// Countdown
 function startCountdown() {
   const now = new Date();
   const year = now.getFullYear();
-  const month = now.getMonth(); 
-  const targetDate = new Date(year, month, 25, 12, 0, 0); // ২৫ তারিখ দুপুর ১২:০০ (লোকাল টাইম)
+  const month = now.getMonth();
+  const targetDate = new Date(year, month, 25, 11, 59, 59); // মাসের ২৫ তারিখ GMT 11:59:59
 
   function updateCountdown() {
     const current = new Date().getTime();
