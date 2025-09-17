@@ -112,3 +112,26 @@ function startCountdown() {
 }
 
 startCountdown();
+
+
+let currentPrice = 0;
+
+async function loadTakeData() {
+  try {
+    const res = await fetch("https://api.coingecko.com/api/v3/coins/overtake");
+    const data = await res.json();
+
+    currentPrice = data.market_data.current_price.usd;
+
+    document.getElementById("livePrice").textContent = "$" + currentPrice.toLocaleString();
+    document.getElementById("take-price").textContent = "$" + currentPrice.toLocaleString();
+    document.getElementById("take-volume").textContent = "$" + data.market_data.total_volume.usd.toLocaleString();
+    document.getElementById("take-fdv").textContent = "$" + data.market_data.fully_diluted_valuation.usd.toLocaleString();
+    document.getElementById("take-mcap").textContent = "$" + data.market_data.market_cap.usd.toLocaleString();
+  } catch (err) {
+    console.error("Error loading TAKE data", err);
+  }
+}
+
+loadTakeData();
+setInterval(loadTakeData, 60000); // প্রতি ১ মিনিটে আপডেট হবে
