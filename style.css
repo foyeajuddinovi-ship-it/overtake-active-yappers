@@ -144,3 +144,40 @@ footer {
   font-weight: bold;
   color: #0CE1F0; /* নীল রঙ */
 }
+
+
+/* Info Cards */
+.info-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 12px 18px;
+  min-width: 120px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  text-align: center;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 14px;
+  color: #0CE1F0;
+}
+
+.card p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #222;
+}
