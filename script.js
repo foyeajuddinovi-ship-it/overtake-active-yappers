@@ -86,7 +86,7 @@ function startCountdown() {
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth(); // চলতি মাস
-  const targetDate = new Date(year, month, 25, 23, 59, 59); // মাসের ২৫ তারিখ রাত ১১:৫৯:৫৯
+  const targetDate = new Date(year, month, 25, 11, 59, 59); // মাসের ২৫ তারিখ GM ১১:৫৯:৫৯
 
   function updateCountdown() {
     const current = new Date().getTime();
