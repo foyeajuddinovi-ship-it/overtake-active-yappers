@@ -8,57 +8,47 @@
 </head>
 <body>
   <div class="container">
-    <!-- লোগো -->
-    <img src="logo.png" alt="Logo" class="logo">
 
-    <h2>OVERTAKE Active Yappers</h2>
-    <input type="text" id="usernameInput" placeholder="Type your Username">
-    <button onclick="checkUsername()">Check</button>
-    
-    <div id="result"></div>
-    <div id="counter">Total Checks: 0</div>
+    <!-- Checker Box -->
+    <div class="section-box">
+      <!-- Overtake Logo -->
+      <img src="overtake-logo.png" alt="Overtake Logo" class="main-logo">
 
-    <!-- আপনার নাম/লিঙ্ক -->
-    <h4>
-      <a href="https://twitter.com/foyeajuddinovi" target="_blank" style="color: #0CE1F0; text-decoration: none;">
-        Made: FOYEAJ
-      </a>
-    </h4>
-  </div>
+      <h2>OVERTAKE Active Yappers</h2>
+      <input type="text" id="usernameInput" placeholder="Type your Username">
+      <button onclick="checkUsername()">Check</button>
+      <div id="result"></div>
+      <div id="counter">Total Checks: 0</div>
+    </div>
 
-<div class="countdown-box">
-  <h3>⏳ S2 left only</h3>
-  <div id="countdown">Loading...</div>
-</div>
-  
-  <!-- $TAKE Calculator -->
-  <div class="calculator-box">
-    <h3>$TAKE Calculator</h3>
-    <input type="number" id="takeAmount" placeholder="Enter $TAKE amount">
-    <button onclick="calculateValue()">Calculate</button>
-    <div id="calcResult">Your value will appear here.</div>
+    <!-- Calculator Box -->
+    <div class="section-box">
+      <h2>$TAKE Calculator(live time price)</h2>
+      <input type="number" id="takeAmount" placeholder="Enter $TAKE amount">
+      <button onclick="calculateValue()">Calculate</button>
+      <p id="calcResult">Your value will appear here.</p>
+    </div>
 
-    <div id="livePrice">Loading Live Price...</div>
+    <!-- Market Info -->
+    <div class="section-box">
+      <h2>Market Info</h2>
+      <div class="row"><span>Price:</span> <p id="take-price">$--</p></div>
+      <div class="row"><span>24h Volume:</span> <p id="take-volume">$--</p></div>
+      <div class="row"><span>FDV:</span> <p id="take-fdv">$--</p></div>
+      <div class="row"><span>Market Cap:</span> <p id="take-mcap">$--</p></div>
+    </div>
 
-    <!-- Info Cards -->
-<div id="take-info" class="info-cards">
-  <div class="card">
-    <h3>Price</h3>
-    <p id="take-price">$--</p>
-  </div>
-  <div class="card">
-    <h3>24h Volume</h3>
-    <p id="take-volume">$--</p>
-  </div>
-  <div class="card">
-    <h3>FDV</h3>
-    <p id="take-fdv">$--</p>
-  </div>
-  <div class="card">
-    <h3>Market Cap</h3>
-    <p id="take-mcap">$--</p>
-  </div>
-</div>
+    <!-- Countdown -->
+    <div class="section-box">
+      <h2>⏳ OVERTAKE YAPPING S2 ENDS IN:</h2>
+      <div id="countdown"></div>
+      <h4 class="made">
+        <a href="https://twitter.com/foyeajuddinovi" target="_blank">
+          Made: FOYEAJ
+        </a>
+        <img src="my-logo.png" alt="My Logo" class="small-logo">
+      </h4>
+    </div>
 
   </div>
 
