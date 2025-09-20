@@ -120,14 +120,18 @@ startCountdown();
 // Visitor Counter
 async function loadVisitorCount() {
   try {
-    const res = await fetch("https://api.countapi.xyz/hit/foyeajuddinovi.github.io/visitors");
+    const res = await fetch("https://api.countapi.xyz/hit/overtakeyapper/sitevisits");
     const data = await res.json();
     document.getElementById("visitor-count").textContent = "Visitors: " + data.value;
   } catch (e) {
+    console.error("Visitor count error:", e);
     document.getElementById("visitor-count").textContent = "Visitors: Error loading";
   }
 }
 
-// প্রথমবার লোড
+// First load
 loadVisitorCount();
 
+// Optionally, প্রতি কতক্ষণ পর রিফ্রেশ করতে চান, সেই মতো লাগিয়ে দিন
+// উদাহরণ, প্রতি ২ মিনিট পর:
+setInterval(loadVisitorCount, 120000);
