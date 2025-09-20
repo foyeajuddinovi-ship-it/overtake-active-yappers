@@ -115,4 +115,19 @@ function startCountdown() {
   const timer = setInterval(updateCountdown, 1000);
 }
 
-startCountdown();
+startCountdown(); 
+
+// Visitor Counter
+async function loadVisitorCount() {
+  try {
+    const res = await fetch("https://api.countapi.xyz/hit/foyeajuddinovi.github.io/visitors");
+    const data = await res.json();
+    document.getElementById("visitor-count").textContent = "Visitors: " + data.value;
+  } catch (e) {
+    document.getElementById("visitor-count").textContent = "Visitors: Error loading";
+  }
+}
+
+// প্রথমবার লোড
+loadVisitorCount();
+
