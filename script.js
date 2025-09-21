@@ -117,10 +117,11 @@ function startCountdown() {
 
 startCountdown(); 
 
-// Visitor Counter
+// nbbb
+
 async function loadVisitorCount() {
   try {
-    const res = await fetch("https://api.countapi.xyz/hit/overtakeyapper/sitevisits");
+    const res = await fetch("https://api.countapi.xyz/hit/foyeajuddinovi/overyappervisits");
     const data = await res.json();
     document.getElementById("visitor-count").textContent = "Visitors: " + data.value;
   } catch (e) {
@@ -129,9 +130,4 @@ async function loadVisitorCount() {
   }
 }
 
-// First load
 loadVisitorCount();
-
-// Optionally, প্রতি কতক্ষণ পর রিফ্রেশ করতে চান, সেই মতো লাগিয়ে দিন
-// উদাহরণ, প্রতি ২ মিনিট পর:
-setInterval(loadVisitorCount, 120000);
