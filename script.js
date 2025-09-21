@@ -117,17 +117,60 @@ function startCountdown() {
 
 startCountdown(); 
 
-// nbbb
+// ---- $TAKE Candle Chart (CoinGecko OHLC + Lightweight Charts) ----
+const TAKE_OHLC_URL = "https://api.coingecko.com/api/v3/coins/overtake/ohlc?vs_currency=usd&days=1";
 
-async function loadVisitorCount() {
+let takeChart, takeSeries;
+
+function createTakeChart() {
+  if (takeChart) return; // একবারই বানাব
+  const el = document.getElementById('take-candle');
+  if (!el) return;
+
+  takeChart = LightweightCharts.createChart(el, {
+    layout: { background: { type: 'solid', color: 'transparent' }, textColor: '#ffffff' },
+    rightPriceScale: { borderColor: 'rgba(255,255,255,0.12)' },
+    timeScale: { borderColor: 'rgba(255,255,255,0.12)', timeVisible: true, secondsVisible: false },
+    grid: {
+      vertLines: { color: 'rgba(255,255,255,0.08)' },
+      horzLines: { color: 'rgba(255,255,255,0.08)' }
+    },
+    crosshair: { mode: LightweightCharts.CrosshairMode.Normal }
+  });
+
+  takeSeries = takeChart.addCandlestickSeries({
+    upColor: '#26a69a', downColor: '#ef5350',
+    wickUpColor: '#26a69a', wickDownColor: '#ef5350',
+    borderVisible: false
+  });
+
+  // Responsive resize
+  new ResizeObserver(() => {
+    const rect = el.getBoundingClientRect();
+    takeChart.applyOptions({ width: rect.width, height: rect.height });
+  }).observe(el);
+}
+
+async function loadTakeOHLC() {
   try {
-    const res = await fetch("https://api.countapi.xyz/hit/foyeajuddinovi/overyappervisits");
-    const data = await res.json();
-    document.getElementById("visitor-count").textContent = "Visitors: " + data.value;
+    const res = await fetch(TAKE_OHLC_URL, { cache: 'no-store' });
+    const raw = await res.json();
+
+    // raw format: [timestamp(ms), open, high, low, close]
+    const candles = (raw || []).map(([t, o, h, l, c]) => ({
+      time: Math.floor(t / 1000),
+      open: Number(o), high: Number(h), low: Number(l), close: Number(c)
+    }));
+
+    if (!candles.length) return;
+
+    createTakeChart();
+    takeSeries.setData(candles);
   } catch (e) {
-    console.error("Visitor count error:", e);
-    document.getElementById("visitor-count").textContent = "Visitors: Error loading";
+    console.error('TAKE OHLC load error', e);
   }
 }
 
-loadVisitorCount();
+// প্রথম লোড + প্রতি 60s আপডেট
+loadTakeOHLC();
+setInterval(loadTakeOHLC, 60000);
