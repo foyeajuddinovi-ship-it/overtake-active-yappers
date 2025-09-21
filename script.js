@@ -117,43 +117,75 @@ function startCountdown() {
 
 startCountdown(); 
 
-// ---- $TAKE Candle Chart (CoinGecko OHLC + Lightweight Charts) ----
+
+
+async function loadTakeOHLC() {
+  try {
+    const res = awa// ---- $TAKE Candle Chart (CoinGecko OHLC + Lightweight Charts) ----
 const TAKE_OHLC_URL = "https://api.coingecko.com/api/v3/coins/overtake/ohlc?vs_currency=usd&days=1";
 
 let takeChart, takeSeries;
 
 function createTakeChart() {
-  if (takeChart) return; // একবারই বানাব
   const el = document.getElementById('take-candle');
-  if (!el) return;
+  if (!el) {
+    console.error("Chart element not found");
+    return;
+  }
 
   takeChart = LightweightCharts.createChart(el, {
+    width: el.clientWidth,
+    height: el.clientHeight || 320,   // height fallback
     layout: { background: { type: 'solid', color: 'transparent' }, textColor: '#ffffff' },
     rightPriceScale: { borderColor: 'rgba(255,255,255,0.12)' },
-    timeScale: { borderColor: 'rgba(255,255,255,0.12)', timeVisible: true, secondsVisible: false },
+    timeScale: { borderColor: 'rgba(255,255,255,0.12)', timeVisible: true },
     grid: {
-      vertLines: { color: 'rgba(255,255,255,0.08)' },
-      horzLines: { color: 'rgba(255,255,255,0.08)' }
-    },
-    crosshair: { mode: LightweightCharts.CrosshairMode.Normal }
+      vertLines: { color: 'rgba(255,255,255,0.1)' },
+      horzLines: { color: 'rgba(255,255,255,0.1)' }
+    }
   });
 
   takeSeries = takeChart.addCandlestickSeries({
-    upColor: '#26a69a', downColor: '#ef5350',
-    wickUpColor: '#26a69a', wickDownColor: '#ef5350',
+    upColor: '#26a69a',
+    downColor: '#ef5350',
+    wickUpColor: '#26a69a',
+    wickDownColor: '#ef5350',
     borderVisible: false
   });
-
-  // Responsive resize
-  new ResizeObserver(() => {
-    const rect = el.getBoundingClientRect();
-    takeChart.applyOptions({ width: rect.width, height: rect.height });
-  }).observe(el);
 }
 
 async function loadTakeOHLC() {
   try {
-    const res = await fetch(TAKE_OHLC_URL, { cache: 'no-store' });
+    const res = await fetch(TAKE_OHLC_URL, { cache: "no-store" });
+    const raw = await res.json();
+    console.log("OHLC raw data:", raw); // Debug
+
+    if (!raw || !raw.length) {
+      document.getElementById("take-candle").innerHTML = "<p style='color:red'>No OHLC data available</p>";
+      return;
+    }
+
+    const candles = raw.map(([t, o, h, l, c]) => ({
+      time: Math.floor(t / 1000),
+      open: o,
+      high: h,
+      low: l,
+      close: c
+    }));
+
+    if (!takeChart) createTakeChart();
+    takeSeries.setData(candles);
+
+  } catch (e) {
+    console.error("TAKE OHLC load error:", e);
+    document.getElementById("take-candle").innerHTML = "<p style='color:red'>Error loading chart</p>";
+  }
+}
+
+// প্রথমবার লোড
+loadTakeOHLC();
+// প্রতি 60 সেকেন্ডে আবার লোড
+setInterval(loadTakeOHLC, 60000);it fetch(TAKE_OHLC_URL, { cache: 'no-store' });
     const raw = await res.json();
 
     // raw format: [timestamp(ms), open, high, low, close]
